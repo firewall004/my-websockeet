@@ -10,14 +10,14 @@ wss.on("connection", (ws) => {
   console.log("Client connected");
 
   ws.on("message", (message) => {
-    const { username, audioData } = JSON.parse(message);
+    const { metadata, audioData } = JSON.parse(message);
 
-    console.log("Received audio data from:", username);
+    console.log("Received audio data from:", metadata);
 
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(
-          JSON.stringify({ username: username, audioData: audioData })
+          JSON.stringify({ metadata: metadata, audioData: audioData })
         );
       }
     });
